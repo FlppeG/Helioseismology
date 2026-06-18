@@ -5,11 +5,13 @@ This project is dedicated to the study of solar oscillations using **SunPy** and
 ## Project Structure
 
 ```text
-├── data/               # Datos (.fits files excluded from the repository)
-├── notebooks/          # Some Jupyter Notebooks for data analysis.
-├── src/                # Python scripts. Divided on scripts with reusable functions and development scripts.  
-├── .gitignore          
-├── requirements.txt    # Proyect dependencies
+├── data/               # Raw FITS data (excluded from the repository)
+├── notebooks/          # Jupyter Notebooks for exploratory data analysis
+├── src/                # Python scripts
+│   ├── utils/          # Reusable functions and tools
+│   └── dev/            # Scripts currently under development
+├── .gitignore          # Configuration to exclude data and environments
+├── requirements.txt    # Project dependencies
 └── README.md
 ```
 
@@ -46,4 +48,4 @@ pip install -r requirements.txt
 
 ## Data management
 
-The data for analysis consists on **FITS** (Flexible Image Transport System). These can be obtainded from the [JSOC Website](http://jsoc.stanford.edu/ajax/lookdata.html) or by using the `Fido.search` utility included in the `src/` directory.
+The data for analysis consists of **FITS** (Flexible Image Transport System). These can be obtainded from the [JSOC Website](http://jsoc.stanford.edu/ajax/lookdata.html) or by using the `Fido.search` utility included in the `src/` directory.
