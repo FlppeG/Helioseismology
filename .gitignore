@@ -223,3 +223,14 @@ data/
 
 # Ignore Jupyter temps
 .ipynb_checkpoints/
+
+# Ignorae caché folders from Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore metadata from Python packages
+*.egg-info/
+build/
+dist/
