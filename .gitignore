@@ -234,3 +234,6 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+
+# Ignore vscode settings data
+.vscode/
