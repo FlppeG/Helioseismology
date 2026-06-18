@@ -5,7 +5,6 @@ This project is dedicated to the study of solar oscillations using **SunPy** and
 ## Project Structure
 
 ```text
-├── data/               # Raw FITS data (excluded from the repository)
 ├── notebooks/          # Jupyter Notebooks for exploratory data analysis
 ├── src/                # Python scripts
 │   ├── utils/          # Reusable functions and tools
