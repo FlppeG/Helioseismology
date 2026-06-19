@@ -32,7 +32,7 @@ def generate_carrington_cube(data_dir,
     fits_files = sorted([f for f in os.listdir(data_dir) if f.endswith('.fits')])
     
     if not fits_files:
-        print(f"Error: No se encontraron archivos FITS en {data_dir}")
+        print(f"Error: No FITS files found in {data_dir}")
         return
 
     # Use the first .fits file for reference
@@ -107,9 +107,7 @@ if __name__ == '__main__':
     parser.add_argument('--res', type=int, default=100)
     args = parser.parse_args()
     
-    # Asignamos las unidades una sola vez
     hpx_flare = args.hpx * u.arcsec
     hpy_flare = args.hpy * u.arcsec
 
-    # Pasamos las variables limpias a la función
     generate_carrington_cube(args.dir, hpx_flare, hpy_flare, n_pix=args.res)
