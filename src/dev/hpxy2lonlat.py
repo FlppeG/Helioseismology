@@ -9,19 +9,6 @@
 def hpxy2lonlat(map_input, hpx, hpy):
     '''
     Converts a coordinate pair from helioprojective to Heliographic Carrington
-
-    Parameters
-    ----------
-        map_input : sunpy.map.GenericMap
-        hpx : float or astropy.units.arcsec
-            helioprojective cartesian x coordinate
-        hpy : float or astropy.units.arcsec
-            helioprojective cartesian y coordinate
-
-    Returns
-    -------
-        (float, float)
-            crln, crlt Heliographic Carrington location
     '''
     from sunpy.coordinates import frames
     import astropy.units as u
@@ -30,27 +17,29 @@ def hpxy2lonlat(map_input, hpx, hpy):
     import logging
 
     logging.getLogger("sunpy").setLevel(logging.WARNING)
-
-    # Suppress all SunPy warnings
     warnings.filterwarnings("ignore", module="sunpy")
 
+    # 1. Aseguramos que hpx y hpy tengan unidades de arcosegundos si vienen como floats
+    if not isinstance(hpx, u.Quantity):
+        hpx = hpx * u.arcsec
+    if not isinstance(hpy, u.Quantity):
+        hpy = hpy * u.arcsec
 
-    # Calculate sun radius in meters
-    rsun_obs = map_input.rsun_obs.to(u.rad)
-    dsun_obs = map_input.dsun
-    rsun = rsun_obs.value*dsun_obs
+    # 2. Creamos la coordenada usando el frame nativo del mapa FITS
+    # Esto hereda automáticamente el rsun, dsun, obstime y observer correctos.
+    c = SkyCoord(hpx, hpy, frame=map_input.coordinate_frame)
 
-    # _check_keywords(map_input)
-    c = SkyCoord(
-        hpx, hpy, unit=u.arcsec,
-        rsun=rsun,
-        observer=map_input.observer_coordinate,
-        frame=frames.Helioprojective,
-        obstime=map_input.reference_date,
-    )
+    # 3. Transformamos a Heliográfica Carrington
+    # Nota: Usamos c.carrington para asegurar la transformación directa al frame dinámico
+    try:
+        carrington_coord = c.transform_to(frames.HeliographicCarrington(observer=map_input.observer_coordinate))
+        lon = carrington_coord.lon
+        lat = carrington_coord.lat
+    except Exception:
+        # Alternativa estándar si el observer ya está implícito en el mapeo de transformaciones
+        lon = c.heliographic_carrington.lon
+        lat = c.heliographic_carrington.lat
 
-    lon = u.Quantity(c.heliographic_carrington.lon.value, u.deg)
-    lat = u.Quantity(c.heliographic_carrington.lat.value, u.deg)
     return lon, lat
 
 

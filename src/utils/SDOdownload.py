@@ -74,8 +74,8 @@ def SDOdownload(time_0, time_1, series, out_dir, email):
 if __name__ == '__main__':
 
     #Config
-    time_0 = '2026-06-03T11:19:00'          
-    time_1 = '2026-06-03T11:35:00'          
+    time_0 = '2026-06-03T11:15:00'          
+    time_1 = '2026-06-03T11:50:00'          
     series = 'hmi.v_45s'                    
     email = 'lfelipelosadag@gmail.com'      
     out_dir = '../../data'                  
